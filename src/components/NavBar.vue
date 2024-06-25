@@ -11,8 +11,17 @@
                     <li class="nav-item">
                         <router-link class="nav-link active" aria-current="page" to="/">Accueil</router-link>
                     </li>
+                    <li class="nav-item">
+                        <router-link class="nav-link active" aria-current="page" to="question">Questions</router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link class="nav-link active" aria-current="page" to="">Réponses</router-link>
+                    </li>
                     <li class="nav-item" v-if="!isLoggedIn">
                         <router-link class="nav-link active" to="login">Login</router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link class="nav-link active" aria-current="page" to="">Users</router-link>
                     </li>
                     <li class="nav-item" v-if="!isLoggedIn">
                         <router-link class="nav-link active" to="register" tabindex="-1"
