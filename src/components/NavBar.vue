@@ -15,13 +15,13 @@
                         <router-link class="link-light link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" aria-current="page" to="question">Questions</router-link>
                     </li>&nbsp;&nbsp;&nbsp;&nbsp;
                     <li class="nav-item">
-                        <router-link class="link-light link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" aria-current="page" to="">Réponses</router-link>
+                        <router-link class="link-light link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" aria-current="page" to="answer">Réponses</router-link>
+                    </li>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <li class="nav-item">
+                        <router-link class="link-light link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" aria-current="page" to="listUsers">Users</router-link>
                     </li>&nbsp;&nbsp;
                     <li class="nav-item" v-if="!isLoggedIn">
                         <router-link class="link-light link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" to="login">Login</router-link>
-                    </li>&nbsp;&nbsp;
-                    <li class="nav-item">
-                        <router-link class="link-light link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" aria-current="page" to="">Users</router-link>
                     </li>&nbsp;&nbsp;
                     <li class="nav-item" v-if="!isLoggedIn">
                         <router-link class="link-light link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" to="register" tabindex="-1"

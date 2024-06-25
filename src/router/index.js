@@ -1,6 +1,5 @@
 import { createRouter,createWebHistory } from "vue-router";
 import Home from "../pages/Home.vue";
-import Dashboard from "../pages/Dashboard.vue";
 const routes = [
     {
         name: "Home",
@@ -19,15 +18,19 @@ const routes = [
         component: () => import("../pages/RegisterForm.vue")
     },
     {
-        name: "Dashboard",
-        path: "/dashboard",
-        component: Dashboard,
-        meta:{requiresAuth:true}
+        name: "AnswerForm",
+        path: "/answer",
+        component: () => import("../pages/Answers/AnswerForm.vue")
     },
     {
         name: "QuestionForm",
         path: "/question",
         component:() => import("../pages/Question/QuestionForm.vue"),
+    },
+    {
+        name:'ListUsers',
+        path:'/listUsers',
+        component: () => import("../pages/Users/ListUsers.vue")
     }
 ];
 const router = createRouter({
