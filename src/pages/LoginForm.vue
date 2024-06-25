@@ -38,7 +38,6 @@
 import axios from 'axios';
 
 export default {
-    // eslint-disable-next-line vue/multi-word-component-names
     name: 'Login',
     data() {
         return {
@@ -55,7 +54,7 @@ export default {
                 });
                 localStorage.setItem('token', response.data.token);
                 // Rediriger vers une autre page après le login
-                this.$router.push({ name: 'Dashboard' });
+                this.$router.push({ name: 'Home' });
             } catch (error) {
                 console.error('Login failed', error);
                 alert('Invalid login details');

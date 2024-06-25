@@ -17,11 +17,21 @@ const routes = [
         path: "/register",
         component: () => import("../pages/RegisterForm.vue")
     },
-    
+
+    {
+        name: "AnswerForm",
+        path: "/answer",
+        component: () => import("../pages/Answers/AnswerForm.vue")
+    },
     {
         name: "QuestionForm",
         path: "/question",
         component:() => import("../pages/Question/QuestionForm.vue"),
+    },
+    {
+        name:'ListUsers',
+        path:'/listUsers',
+        component: () => import("../pages/Users/ListUsers.vue")
     }
 ];
 const router = createRouter({

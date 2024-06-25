@@ -1,6 +1,5 @@
 <template>
-    <div class="container">
-        <router-link to="question" class="btn btn-outline-primary mb-3">Poser une question</router-link>
+   <div class="container">
        <div class="card">
         <div class="card-body">
             <table class="table table-striped table-hover">
@@ -18,7 +17,7 @@
                 <tr>
                     <td>How to install Laravel</td>
                     <td>5</td>
-                    <td>Laravel, PHP <i class="fa-solid fa-thumbs-up"></i></td>
+                    <td>Laravel, PHP</td>
                 </tr>
             </tbody>
         </table>
@@ -29,12 +28,10 @@
 
 <script>
 export default {
-    name: 'Home'
+
 }
 </script>
 
 <style>
-.container {
-    margin-top: 8%;
-}
+
 </style>

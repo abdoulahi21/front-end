@@ -58,7 +58,17 @@ export default {
             errors: []
         }
     },
+    
     methods: {
+        async fetchQuestions() {
+            try {
+                let response = await axios.get('http://127.0.0.1:8000/api/questions');
+                this.questionsList = response.data.questions;
+            } catch (error) {
+                console.log(error);
+                this.errors.push('Une erreur est survenue lors de la récupération des questions.');
+            }
+        },
         async createQuestion() {
     this.errors = [];
     if (this.questions.slug === '') {
