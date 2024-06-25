@@ -1,15 +1,16 @@
 <template>
         <Dashboard>
-           <div>
-           </div>
+         <center>
+            <div class="mt-5">
+            my button
+          </div>
+         </center>
         </Dashboard>
-   
 </template>
 
 <script>
 import axios from 'axios'
 import Dashboard from './Dashboard.vue'
-import axios from 'axios'
 export default {
     name: 'AskQuestion',
     components: {

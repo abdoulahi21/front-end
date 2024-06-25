@@ -1,5 +1,4 @@
 <template>
-
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-primary">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Help Me</a>
@@ -12,17 +11,16 @@
                     <li class="nav-item">
                         <router-link class="nav-link active" aria-current="page" to="/">Accueil</router-link>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" v-if="!isLoggedIn">
                         <router-link class="nav-link active" to="login">Login</router-link>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" v-if="!isLoggedIn">
                         <router-link class="nav-link active" to="register" tabindex="-1"
                             aria-disabled="true">Register</router-link>
                     </li>
                 </ul>
             </div>
-            <!--logout-->
-            <div class="d-flex">
+            <div class="d-flex" v-if="isLoggedIn">
                 <form @submit.prevent="logout">
                     <button class="btn btn-outline-light" type="submit">Deconnexion</button>
                 </form>
@@ -34,32 +32,33 @@
 <script>
 import axios from 'axios';
 export default {
-    name: 'LogoutButton',
-    setup() {
-       
-
-        const logout = async () => {
-            try {
-                const token = localStorage.getItem('token'); // Ou récupérez le token de l'endroit où vous le stockez
-                await axios.post('http://127.0.0.1:8000/api/logout', {}, {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
-
-                localStorage.removeItem('token'); // Supprimez le token stocké localement
-                this.$router.push('/LoginForm'); // Redirigez l'utilisateur vers la page de connexion ou une autre page appropriée
-            } catch (error) {
-                console.error('Error during logout', error);
-                // Gérez les erreurs, affichez des messages à l'utilisateur, etc.
-            }
-        };
-
+    name: 'NavBar',
+    data() {
         return {
-            logout
+            token: localStorage.getItem('token')
         };
+    },
+    computed: {
+        isLoggedIn() {
+            return !!this.token;
+        }
+    },
+    methods: {
+        async logout() {
+            localStorage.removeItem('token');
+            this.token = null;
+            // Rediriger vers une autre page après la déconnexion et rechargez la page
+            this.$router.push({ name: 'Home' });
+        }
+    },
+    watch: {
+        token(newToken) {
+            this.isLoggedIn = !!newToken;
+        }
     }
 }
 </script>
 
-<style></style>
+<style>
+/* Add your styles here */
+</style>

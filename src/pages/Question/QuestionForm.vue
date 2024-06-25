@@ -9,17 +9,22 @@
                     <form @submit.prevent="createQuestion">
                         <div class="mb-3">
                             <label for="" class="form-label">Title</label>
-                            <input v-model="title" type="text" class="form-control" :class="[errors.title ? 'border border-danger' : '']" style="border-radius: 15px;">
+                            <input v-model="title" type="text" class="form-control"
+                                :class="[errors.title ? 'border border-danger' : '']" style="border-radius: 15px;">
                             <small class="text-danger" v-if="errors.title">{{ errors.title }}</small>
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">Description</label>
-                            <textarea v-model="description" class="form-control" :class="[errors.description ? 'border border-danger' : '']" rows="3" style="border-radius: 15px;"></textarea>
+                            <textarea v-model="description" class="form-control"
+                                :class="[errors.description ? 'border border-danger' : '']" rows="3"
+                                style="border-radius: 15px;"></textarea>
                             <small class="text-danger" v-if="errors.description">{{ errors.description }}</small>
                         </div>
                         <div class="mb-3">
                             <div v-for="tag in tagsList" :key="tag.id" class="mb-2 form-check">
-                                <input v-model="tags" class="form-check-input" :class="[errors.tags ? 'border border-danger' : '']" type="checkbox" :value="tag.id">
+                                <input v-model="tags" class="form-check-input"
+                                    :class="[errors.tags ? 'border border-danger' : '']" type="checkbox"
+                                    :value="tag.id">
                                 <label class="form-check-label" for="flexCheckDefault">
                                     {{ tag.name }}
                                 </label>
@@ -50,10 +55,7 @@ export default {
     components: {
         Dashboard,
     },
-    props: {
-        errors: Object,
-        tagsList: Array,
-    },
+
     data() {
         return {
             title: '',
@@ -64,24 +66,8 @@ export default {
     },
     methods: {
         async createQuestion() {
-            this.loading = true;
-            try {
-                const response = await axios.post('/question/create', {
-                    title: this.title,
-                    description: this.description,
-                    tags: this.tags,
-                });
-                this.loading = false;
-                // Handle success (e.g., redirect to the new question page)
-                console.log(response.data);
-            } catch (error) {
-                this.loading = false;
-                // Handle error (e.g., set validation errors)
-                if (error.response && error.response.data.errors) {
-                    this.errors = error.response.data.errors;
-                }
-            }
-        },
+
+        }
     },
 };
 </script>

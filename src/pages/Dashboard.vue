@@ -45,15 +45,15 @@
                     <div class="mb-3 border-0 card" style="border-radius: 15px;">
                         <div class="card-body">
                             <div>
-                                <router-link to="" class="mb-2 btn w-100 text-start">Questions </router-link>
+                                <router-link to="question" class="mb-2 btn w-100 text-start">Questions </router-link>
                                 <router-link to="" class="mb-2 btn w-100 text-start">Users</router-link>
                             </div>
                         </div>
                     </div>
                 </div>
-                <main class="col-12 col-md-8">
-                    <slot></slot>
-                </main>
+                <div class="col-12 col-md-8">
+                    <slot>Button</slot>
+                </div>
             </div>
         </div>
     </div>
