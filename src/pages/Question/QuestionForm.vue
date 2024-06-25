@@ -24,14 +24,16 @@
                 <div class="col-md-8">
                     <form @submit.prevent="createQuestion">
                         <div class="mb-3">
+                            <label for="slug" class="form-label">Slug de la question</label>
+                            <input type="text" id="slug" class="form-control" v-model="questions.slug">
+                        </div>
+                        <div class="mb-3">
                             <label for="title" class="form-label">Titre de la question</label>
-                            <input type="text"  class="form-control" v-model="questions.title"
-                                >
+                            <input type="text" id="title" class="form-control" v-model="questions.title">
                         </div>
                         <div class="mb-3">
                             <label for="description" class="form-label">Contenu de la question</label>
-                            <textarea  class="form-control" v-model="questions.description" rows="4"
-                                ></textarea>
+                            <textarea id="description" class="form-control" v-model="questions.description" rows="4"></textarea>
                         </div>
                         <button type="submit" class="btn btn-outline-primary">Poser la question</button>
                     </form>
@@ -49,6 +51,7 @@ export default {
     data() {
         return {
             questions: {
+                slug: '',
                 title: '',
                 description: ''
             },
@@ -57,35 +60,45 @@ export default {
     },
     methods: {
         async createQuestion() {
-            this.errors = []
-            if (!this.questions.title == '') {
-                this.errors.push('Le title est requis')
+    this.errors = [];
+    if (this.questions.slug === '') {
+        this.errors.push('Le slug est requis');
+    }
+    if (this.questions.title === '') {
+        this.errors.push('Le titre est requis');
+    }
+    if (this.questions.description === '') {
+        this.errors.push('La description est requise');
+    }
+    if (!this.errors.length) {
+        let formData = new FormData();
+        formData.append('slug', this.questions.slug);
+        formData.append('title', this.questions.title);
+        formData.append('description', this.questions.description);
+        try {
+            let response = await axios.post('http://127.0.0.1:8000/api/questions', formData, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('authToken')}` // Assurez-vous que le token est stocké et utilisé correctement
+                }
+            });
+            if (response.status === 200) {
+                this.questions.slug = '';
+                this.questions.title = '';
+                this.questions.description = '';
+                alert(response.data.message);
+                this.fetchQuestions(); // Mettre à jour la liste des questions
             }
-            if (!this.questions.description == '') {
-                this.errors.push('La description est requis')
-            }
-            if (!this.errors.length) {
-                let formData = new FormData()
-                formData.append('title', this.questions.title)
-                formData.append('description', this.questions.description)
-                let url = 'http://127.0.0.1:8000/api/questions'
-                await axios.post(url, formData).then((response) => {
-                    console.log(response)
-                    if (response.status === 200) {
-                        this.questions.title = ''
-                        this.questions.description = ''
-                        alert(response.data.message)
-                    }
-                }).catch((error) => {
-                    console.log(error.response)
-                    if (error.response.data.errors) {
-                        this.errors = Object.values(error.response.data.errors).flat()
-                    } else {
-                        this.errors.push('Une erreur est survenue. Veuillez réessayer.')
-                    }
-                })
+        } catch (error) {
+            console.log(error.response);
+            if (error.response && error.response.data && error.response.data.errors) {
+                this.errors = Object.values(error.response.data.errors).flat();
+            } else {
+                this.errors.push('Une erreur est survenue. Veuillez réessayer.');
             }
         }
+    }
+}
+
     }
 };
 </script>

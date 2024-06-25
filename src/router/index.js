@@ -1,6 +1,5 @@
 import { createRouter,createWebHistory } from "vue-router";
 import Home from "../pages/Home.vue";
-import Dashboard from "../pages/Dashboard.vue";
 const routes = [
     {
         name: "Home",
@@ -18,12 +17,7 @@ const routes = [
         path: "/register",
         component: () => import("../pages/RegisterForm.vue")
     },
-    {
-        name: "Dashboard",
-        path: "/dashboard",
-        component: Dashboard,
-        meta:{requiresAuth:true}
-    },
+    
     {
         name: "QuestionForm",
         path: "/question",
