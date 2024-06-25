@@ -2,8 +2,13 @@
     <div class="container ">
         <div class="card">
             <div class="card-header">
-                    Listes des Questions
-                </div>
+                Listes des Questions
+            </div>
+            <div class="alert alert-danger mt-4" v-if="errors.length">
+                        <ul>
+                            <li v-for="error in errors" :key="error">{{ error }}</li>
+                        </ul>
+                    </div>
             <div class="card-body d-flex col-12 col-md-8">
                 <div class="col-md-10">
                     <table class="table table-striped table-hover">
@@ -11,7 +16,7 @@
                             <tr>
                                 <td>{{ question.title }}</td>
                                 <td>{{ question.description }}</td>
-                                <td>{{question.user_id}}</td>
+                                <td>{{ question.user_id }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -19,15 +24,16 @@
                 <div class="col-md-8">
                     <form @submit.prevent="createQuestion">
                         <div class="mb-3">
-                            <label for="questionTitle" class="form-label">Titre de la question</label>
-                            <input type="text" id="questionTitle" class="form-control" v-model="questions.title" required>
+                            <label for="title" class="form-label">Titre de la question</label>
+                            <input type="text"  class="form-control" v-model="questions.title"
+                                >
                         </div>
                         <div class="mb-3">
-                            <label for="questionContent" class="form-label">Contenu de la question</label>
-                            <textarea id="questionContent" class="form-control" v-model="questions.description" rows="4"
-                                required></textarea>
+                            <label for="description" class="form-label">Contenu de la question</label>
+                            <textarea  class="form-control" v-model="questions.description" rows="4"
+                                ></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary">Poser la question</button>
+                        <button type="submit" class="btn btn-outline-primary">Poser la question</button>
                     </form>
                 </div>
             </div>
@@ -40,32 +46,30 @@ import axios from 'axios';
 
 export default {
     name: "QuestionForm",
-    data(){
-        return{
-            questions:{
-                title:'',
-                description:''
+    data() {
+        return {
+            questions: {
+                title: '',
+                description: ''
             },
-           error:[]
+            errors: []
         }
     },
-    methods:{
-        async createQuestion(){
+    methods: {
+        async createQuestion() {
             this.errors = []
-            if(!this.questions.title=='')
-            {
+            if (!this.questions.title == '') {
                 this.errors.push('Le title est requis')
             }
-            if(!this.questions.description=='')
-            {
+            if (!this.questions.description == '') {
                 this.errors.push('La description est requis')
             }
-            if(!this.error.length){
+            if (!this.errors.length) {
                 let formData = new FormData()
                 formData.append('title', this.questions.title)
-                formData.append('description',this.questions.description)
-                let url = 'http://127.0.0.1:8000/api/questionss'
-                await axios.post(url,formData).then((response) => {
+                formData.append('description', this.questions.description)
+                let url = 'http://127.0.0.1:8000/api/questions'
+                await axios.post(url, formData).then((response) => {
                     console.log(response)
                     if (response.status === 200) {
                         this.questions.title = ''

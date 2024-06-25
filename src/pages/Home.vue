@@ -3,7 +3,7 @@
        
     </div>
     <div class="container">
-        <router-link to="/ask-question" class="btn btn-primary mb-3">Ask Question</router-link>
+        <router-link to="question" class="btn btn-outline-primary mb-3">Poser une question</router-link>
        <div class="card">
         <div class="card-body">
             <table class="table table-striped table-hover">
