@@ -77,9 +77,7 @@ export default {
           console.log(error);
         });
     },
-},
-        
-        async createQuestion() {
+    async createQuestion() {
     this.errors = [];
     if (this.questions.slug === '') {
         this.errors.push('Le slug est requis');
@@ -117,6 +115,9 @@ export default {
             }
         }
     }
+},
+        
+    
 }
 
     }
