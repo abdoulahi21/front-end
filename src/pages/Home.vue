@@ -5,21 +5,14 @@
         <div class="card-body">
             <table class="table table-striped table-hover">
             <tbody>
-                <tr>
-                    <td>How to install Laravel</td>
-                    <td>5</td>
-                    <td>Laravel, PHP</td>
+                <tr v-for="question in questions" :key="question.id">
+                    <td>{{ question.user_id }}</td>
+                    <td>{{ question.slug }}</td>
+                    <td>{{ question.title }}</td>
+                    <td>{{ question.description }}</td>
+                    
                 </tr>
-                <tr>
-                    <td>How to install Laravel</td>
-                    <td>5</td>
-                    <td>Laravel, PHP</td>
-                </tr>
-                <tr>
-                    <td>How to install Laravel</td>
-                    <td>5</td>
-                    <td>Laravel, PHP <i class="fa-solid fa-thumbs-up"></i></td>
-                </tr>
+
             </tbody>
         </table>
         </div>
@@ -28,8 +21,32 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
-    name: 'Home'
+    name: 'Home',
+    data() {
+    return {
+      questions: Array,
+    };
+  },
+  created() {
+    this.getQuestions();
+  },
+  methods: {
+    async getQuestions() {
+      let url = "http://127.0.0.1:8000/api/questions";
+      await axios
+        .get(url)
+        .then((response) => {
+          this.questions = response.data.questions;
+          console.log(this.questions);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+},
 }
 </script>
 

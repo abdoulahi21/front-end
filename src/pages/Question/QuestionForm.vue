@@ -5,18 +5,20 @@
                 Listes des Questions
             </div>
             <div class="alert alert-danger mt-4" v-if="errors.length">
-                        <ul>
-                            <li v-for="error in errors" :key="error">{{ error }}</li>
-                        </ul>
-                    </div>
+                <ul>
+                    <li v-for="error in errors" :key="error">{{ error }}</li>
+                </ul>
+            </div>
             <div class="card-body d-flex col-12 col-md-8">
                 <div class="col-md-10">
                     <table class="table table-striped table-hover">
                         <tbody v-for="question in questions" :key="question.id">
                             <tr>
+                                <td>{{ question.user_id }}</td>
+                                <td>{{ question.slug }}</td>
                                 <td>{{ question.title }}</td>
                                 <td>{{ question.description }}</td>
-                                <td>{{ question.user_id }}</td>
+                                
                             </tr>
                         </tbody>
                     </table>
@@ -42,33 +44,41 @@
         </div>
     </div>
 </template>
-
 <script>
 import axios from 'axios';
-
 export default {
     name: "QuestionForm",
     data() {
         return {
+        
             questions: {
                 slug: '',
                 title: '',
                 description: ''
             },
+            questions:[],
             errors: []
         }
     },
     
-    methods: {
-        async fetchQuestions() {
-            try {
-                let response = await axios.get('http://127.0.0.1:8000/api/questions');
-                this.questionsList = response.data.questions;
-            } catch (error) {
-                console.log(error);
-                this.errors.push('Une erreur est survenue lors de la récupération des questions.');
-            }
-        },
+  created() {
+    this.getQuestions();
+  },
+  methods: {
+    async getQuestions() {
+      let url = "http://127.0.0.1:8000/api/questions";
+      await axios
+        .get(url)
+        .then((response) => {
+          this.questions = response.data.questions;
+          console.log(this.questions);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+},
+        
         async createQuestion() {
     this.errors = [];
     if (this.questions.slug === '') {
@@ -110,7 +120,6 @@ export default {
 }
 
     }
-};
 </script>
 
 <style scoped>
