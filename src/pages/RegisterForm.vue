@@ -25,6 +25,12 @@
                             </div>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-image"></i></span>
+                                </div>
+                                <input type="file" @change="handleFileUpload" class="form-control" placeholder="Photo">
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-lock"></i></span>
                                 </div>
                                 <input type="password" v-model="user.password" class="form-control" placeholder="Mot de passe">
@@ -36,11 +42,12 @@
                                 <input type="password" v-model="user.password_confirmation" class="form-control" placeholder="Confirmer le mot de passe">
                             </div>
                             <div class="row">
-                                <div class="col-6">
-                                    <button type="submit" class="btn btn-primary px-4">S'inscrire</button>
+                                <div class="col-7">
+                                    <button type="submit" class="btn btn-primary px-4">Sign up</button>&nbsp;
+                                    <router-link to="/" class="btn btn-primary" >Annuler</router-link>
                                 </div>
-                                <div class="col-6 text-right">
-                                    <router-link to="login" class="text-decoration-none">Vous avez déjà un compte?</router-link>
+                                <div class="col-4 text-right">
+                                    <router-link to="/login" class="text-decoration-none">J'ai un compte</router-link>
                                 </div>
                             </div>
                         </form>
@@ -50,7 +57,6 @@
         </div>
     </div>
 </template>
-
 <script>
 import axios from 'axios'
 export default {
@@ -61,12 +67,16 @@ export default {
                 name: '',
                 email: '',
                 password: '',
-                password_confirmation: ''
+                password_confirmation: '',
+                photo: null
             },
             errors: []
         }
     },
     methods: {
+        handleFileUpload(event) {
+            this.user.photo = event.target.files[0]
+        },
         async register() {
             this.errors = []
             if (!this.user.name) {
@@ -90,13 +100,21 @@ export default {
                 formData.append('email', this.user.email)
                 formData.append('password', this.user.password)
                 formData.append('password_confirmation', this.user.password_confirmation)
+                if (this.user.photo) {
+                    formData.append('photo', this.user.photo)
+                }
                 let url = 'http://127.0.0.1:8000/api/register'
-                await axios.post(url, formData).then((response) => {
+                await axios.post(url, formData,{
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    }
+                }).then((response) => {
                     console.log(response)
                     if (response.status === 200) {
                         this.user.name = ''
                         this.user.email = ''
                         this.user.password = ''
+                        this.user.photo = null
                         this.user.password_confirmation = ''
                         alert(response.data.message)
                         this.$router.push({ name: 'Loginform' })

@@ -9,26 +9,31 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav me-auto mb-2 mb-md-0">
                     <li class="nav-item">
-                        <router-link class="link-light link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" aria-current="page" to="/">Accueil</router-link>
+                        <router-link
+                            class="link-light link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
+                            aria-current="page" to="/">Accueil</router-link>
                     </li> &nbsp;&nbsp;&nbsp;&nbsp;
                     <li class="nav-item">
-                        <router-link class="link-light link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" aria-current="page" to="question">Questions</router-link>
+                        <router-link
+                            class="link-light link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
+                            aria-current="page" to="question">Questions</router-link>
                     </li>&nbsp;&nbsp;&nbsp;&nbsp;
                     <li class="nav-item">
-                        <router-link class="link-light link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" aria-current="page" to="answer">Réponses</router-link>
+                        <router-link
+                            class="link-light link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
+                            aria-current="page" to="answer">Réponses</router-link>
                     </li>&nbsp;&nbsp;&nbsp;&nbsp;
                     <li class="nav-item">
-                        <router-link class="link-light link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" aria-current="page" to="listUsers">Users</router-link>
+                        <router-link
+                            class="link-light link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
+                            aria-current="page" to="listUsers">Users</router-link>
                     </li>&nbsp;&nbsp;
-                    <li class="nav-item" v-if="!isLoggedIn">
-                        <router-link class="link-light link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" to="login">Login</router-link>
-                    </li>&nbsp;&nbsp;
-                    <li class="nav-item" v-if="!isLoggedIn">
-                        <router-link class="link-light link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" to="register" tabindex="-1"
-                            aria-disabled="true">Register</router-link>
-                    </li>
                 </ul>
+               
             </div>
+            <div class="d-flex" v-if="!isLoggedIn">
+                    <router-link class="btn btn-outline-light" to="/login">Login</router-link>
+                </div>
             <div class="d-flex" v-if="isLoggedIn">
                 <form @submit.prevent="logout">
                     <button class="btn btn-outline-light" type="submit">Deconnexion</button>
@@ -64,6 +69,9 @@ export default {
         token(newToken) {
             this.isLoggedIn = !!newToken;
         }
+    },
+    mounted() {
+
     }
 }
 </script>

@@ -20,10 +20,11 @@
                             </div>
                             <div class="row">
                                 <div class="col-6">
-                                    <button type="submit" class="btn btn-primary px-4">Login</button>
+                                    <button type="submit" class="btn btn-primary px-4">Login</button>&nbsp;
+                                    <router-link to="/" class="btn btn-primary" >Annuler</router-link>
                                 </div>
                                 <div class="col-6 text-right">
-                                    <a href="#" class="text-decoration-none">Forgot password?</a>
+                                    <router-link to="/register" class="text-decoration-none">Vous n'avez pas de compte?</router-link>
                                 </div>
                             </div>
                         </form>
@@ -61,11 +62,11 @@ export default {
             }
         },
     },
-    mounted(){
-        
-    }
+    mounted() {
 
     }
+
+}
 </script>
 
 <style scoped>

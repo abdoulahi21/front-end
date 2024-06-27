@@ -15,11 +15,35 @@
         </div>
     </div>
 </template>
-
 <script>
-export default {
+import axios from 'axios';
 
+export default {
+    name: 'ListUsers',
+    data() {
+    return {
+      users: Array,
+    };
+  },
+  created() {
+    this.getUsers();
+  },
+  methods: {
+    async getUsers() {
+      let url = "http://127.0.0.1:8000/api/users";
+      await axios
+        .get(url)
+        .then((response) => {
+          this.users = response.data.users;
+          console.log(this.users);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+},
 }
 </script>
+
 
 <style></style>
