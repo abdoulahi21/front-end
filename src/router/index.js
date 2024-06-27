@@ -35,7 +35,7 @@ const routes = [
     },
     {
         name:'Questiondetails',
-        path:'/questiondetails',
+        path:'/questiondetails/:id?',
         component: () => import("../pages/Question/Questiondetails.vue")
     }
 ];

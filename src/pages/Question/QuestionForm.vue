@@ -11,18 +11,15 @@
             </div>
             <div class="card-body d-flex col-12 col-md-8">
                 <div class="col-md-10">
-                    <table class="table table-striped table-hover">
-                        <tbody v-for="question in questions" :key="question.id">
-                            <tr>
-                                <td></td>
-                                <td>{{ question.user_id }}</td>
-                                <td>{{ question.slug }}</td>
-                                <td>{{ question.title }}</td>
-                                <td>{{ question.description }}</td>
-                                <td><router-link :to="{ name: 'questiondetails',params:{id:question.id} }" class="btn btn-outline-secondary" >view</router-link></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="card w-75 mb-3">
+                            <div class="card-body" v-for="question in questions" :key="question.id">
+                                <h5>{{ question.title }}</h5>
+                                <h5>{{ question.description }}</h5>
+                                <p class="card-text">{{ question.slug }}
+                                </p>
+                                <router-link :to="{ path:'/questiondetails/' + question.id}" class="btn btn-outline-secondary">Voir details</router-link>
+                            </div>
+                    </div>
                 </div>
                 <div class="col-md-8">
                     <form @submit.prevent="createQuestion">
@@ -36,7 +33,8 @@
                         </div>
                         <div class="mb-3">
                             <label for="description" class="form-label">Contenu de la question</label>
-                            <textarea id="description" class="form-control" v-model="questions.description" rows="4"></textarea>
+                            <textarea id="description" class="form-control" v-model="questions.description"
+                                rows="4"></textarea>
                         </div>
                         <button type="submit" class="btn btn-outline-primary">Poser la question</button>
                     </form>
@@ -56,71 +54,74 @@ export default {
                 title: '',
                 description: ''
             },
-            questions:[],
+            questions: [],
             errors: []
         }
     },
-    
-  created() {
-    this.getQuestions();
-  },
-  methods: {
-    async getQuestions() {
-      let url = "http://127.0.0.1:8000/api/questions";
-      await axios
-        .get(url)
-        .then((response) => {
-          this.questions = response.data.questions;
-          console.log(this.questions);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-    async createQuestion() {
-    this.errors = [];
-    if (this.questions.slug === '') {
-        this.errors.push('Le slug est requis');
-    }
-    if (this.questions.title === '') {
-        this.errors.push('Le titre est requis');
-    }
-    if (this.questions.description === '') {
-        this.errors.push('La description est requise');
-    }
-    if (!this.errors.length) {
-        let formData = new FormData();
-        formData.append('slug', this.questions.slug);
-        formData.append('title', this.questions.title);
-        formData.append('description', this.questions.description);
-        try {
-            let response = await axios.post('http://127.0.0.1:8000/api/questions', formData, {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('authToken')}` // Assurez-vous que le token est stocké et utilisé correctement
-                }
-            });
-            if (response.status === 200) {
-                this.questions.slug = '';
-                this.questions.title = '';
-                this.questions.description = '';
-                alert(response.data.message);
-                this.fetchQuestions(); // Mettre à jour la liste des questions
-            }
-        } catch (error) {
-            console.log(error.response);
-            if (error.response && error.response.data && error.response.data.errors) {
-                this.errors = Object.values(error.response.data.errors).flat();
-            } else {
-                this.errors.push('Une erreur est survenue. Veuillez réessayer.');
-            }
-        }
-    }
-},
-        
-    
-}
 
+    created() {
+        this.getQuestions();
+    },
+    methods: {
+        async getQuestions() {
+            let url = "http://127.0.0.1:8000/api/questions";
+            await axios
+                .get(url)
+                .then((response) => {
+                    this.questions = response.data.questions;
+                    console.log(this.questions);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        },
+        async createQuestion() {
+            this.errors = [];
+            if (this.questions.slug === '') {
+                this.errors.push('Le slug est requis');
+            }
+            if (this.questions.title === '') {
+                this.errors.push('Le titre est requis');
+            }
+            if (this.questions.description === '') {
+                this.errors.push('La description est requise');
+            }
+            if (!this.errors.length) {
+                let formData = new FormData();
+                formData.append('slug', this.questions.slug);
+                formData.append('title', this.questions.title);
+                formData.append('description', this.questions.description);
+                try {
+                    let response = await axios.post('http://127.0.0.1:8000/api/questions', formData, {
+                        headers: {
+                            'Authorization': `Bearer ${localStorage.getItem('authToken')}` // Assurez-vous que le token est stocké et utilisé correctement
+                        }
+                    });
+                    if (response.status === 200) {
+                        this.questions.slug = '';
+                        this.questions.title = '';
+                        this.questions.description = '';
+                        alert(response.data.message);
+                        this.fetchQuestions(); // Mettre à jour la liste des questions
+                    }
+                } catch (error) {
+                    console.log(error.response);
+                    if (error.response && error.response.data && error.response.data.errors) {
+                        this.errors = Object.values(error.response.data.errors).flat();
+                    } else {
+                        this.errors.push('Une erreur est survenue. Veuillez réessayer.');
+                    }
+                }
+            }
+        },
+
+
+    },
+    mounted(){
+        
     }
+
+}
 </script>
 
 <style scoped>

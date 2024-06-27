@@ -4,7 +4,8 @@
         <div class="card w-75 mb-3">
             <div class="card-body" v-for="question in questions" :key="question.id">
                 <h5 class="card-title">{{ question.slug}} {{ question.title }}</h5> 
-                <p class="card-text">{{ question.description }}</p>
+                <p class="card-text">{{ question.description }}</p> 
+                <router-link :to="{ path:'/questiondetails/' + question.id}" class="btn btn-outline-secondary">Voir details</router-link>
             </div>
         </div>
     </div>
