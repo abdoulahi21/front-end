@@ -2,14 +2,14 @@
     <div class="container">
         <div class="card w-75 mb-3">
             <div class="card-body">
-                <h5 class="card-title">{{ question.title }}</h5>
+                <h5 class="card-title">{{question.title}}</h5>
                 <p class="card-text">{{ question.description }}</p>
             </div>
         </div>
         <form  @submit.prevent="createComment">
-            <div class="mb-3 ">
+            <div class="mb-3 w-75 ">
                 <textarea class="form-control" placeholder="commentaire" v-model="commentaire.comment" id="exampleFormControlTextarea1"
-                    rows=""></textarea>
+                    rows="3"></textarea>
             </div>
             <button type="submit" class="btn btn-outline-primary">Envoyer</button>
         </form>
@@ -21,6 +21,7 @@ export default {
     name: "Questiondetails",
     data() {
         return {
+            question:Array,
             commentaire: {
                 comment: ''
             }
@@ -57,9 +58,6 @@ export default {
             }
         }
     },
-    mounted(){
-        
-    }
 }
 </script>
 

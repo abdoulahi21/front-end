@@ -130,9 +130,7 @@ export default {
             }
         }
     },
-    mounted(){
-        
-    }
+
 }
 </script>
 
