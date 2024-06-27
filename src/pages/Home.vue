@@ -1,22 +1,12 @@
 <template>
     <div class="container">
-        <router-link to="question" class="btn btn-outline-primary mb-3">Poser une question</router-link>
-       <div class="card">
-        <div class="card-body">
-            <table class="table table-striped table-hover">
-            <tbody>
-                <tr v-for="question in questions" :key="question.id">
-                    <td>{{ question.user_id }}</td>
-                    <td>{{ question.slug }}</td>
-                    <td>{{ question.title }}</td>
-                    <td>{{ question.description }}</td>
-                    
-                </tr>
-
-            </tbody>
-        </table>
+      <router-link to="question" class="btn btn-outline-primary mb-3">Poser une question</router-link>
+        <div class="card w-75 mb-3">
+            <div class="card-body" v-for="question in questions" :key="question.id">
+                <h5 class="card-title">{{ question.slug}} {{ question.title }}</h5> 
+                <p class="card-text">{{ question.description }}</p>
+            </div>
         </div>
-       </div>
     </div>
 </template>
 
@@ -53,5 +43,10 @@ export default {
 <style>
 .container {
     margin-top: 8%;
+}
+.user-photo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
 }
 </style>

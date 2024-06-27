@@ -32,6 +32,11 @@ const routes = [
         name:'ListUsers',
         path:'/listUsers',
         component: () => import("../pages/Users/ListUsers.vue")
+    },
+    {
+        name:'Questiondetails',
+        path:'/questiondetails',
+        component: () => import("../pages/Question/Questiondetails.vue")
     }
 ];
 const router = createRouter({

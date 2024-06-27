@@ -14,11 +14,12 @@
                     <table class="table table-striped table-hover">
                         <tbody v-for="question in questions" :key="question.id">
                             <tr>
+                                <td></td>
                                 <td>{{ question.user_id }}</td>
                                 <td>{{ question.slug }}</td>
                                 <td>{{ question.title }}</td>
                                 <td>{{ question.description }}</td>
-                                
+                                <td><router-link :to="{ name: 'questiondetails',params:{id:question.id} }" class="btn btn-outline-secondary" >view</router-link></td>
                             </tr>
                         </tbody>
                     </table>
@@ -50,7 +51,6 @@ export default {
     name: "QuestionForm",
     data() {
         return {
-        
             questions: {
                 slug: '',
                 title: '',
