@@ -12,21 +12,18 @@
             <div class="card-body d-flex col-12 col-md-8">
                 <div class="col-md-10">
                     <div class="card w-75 mb-3">
-                            <div class="card-body" v-for="question in questions" :key="question.id">
-                                <h5>{{ question.title }}</h5>
-                                <h5>{{ question.description }}</h5>
-                                <p class="card-text">{{ question.slug }}
-                                </p>
-                                <router-link :to="{ path:'/questiondetails/' + question.id}" class="btn btn-outline-secondary">Voir details</router-link>
-                            </div>
+                        <div class="card-body" v-for="question in questions" :key="question.id">
+                            <h5>{{ question.title }}</h5>
+                            <h5>{{ question.description }}</h5>
+                            <p class="card-text">{{ question.slug }}
+                            </p>
+                            <router-link :to="{ path: '/questiondetails/' + question.id }"
+                                class="btn btn-outline-secondary">Voir details</router-link>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-8">
                     <form @submit.prevent="createQuestion">
-                        <div class="mb-3">
-                            <label for="slug" class="form-label">Slug de la question</label>
-                            <input type="text" id="slug" class="form-control" v-model="questions.slug">
-                        </div>
                         <div class="mb-3">
                             <label for="title" class="form-label">Titre de la question</label>
                             <input type="text" id="title" class="form-control" v-model="questions.title">
@@ -35,6 +32,12 @@
                             <label for="description" class="form-label">Contenu de la question</label>
                             <textarea id="description" class="form-control" v-model="questions.description"
                                 rows="4"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="slug" class="form-label">Carégorie de la question</label>
+                            <select  v-model="questions.slug"  class="form-select" multiple aria-label="Multiple select example">
+                                <option v-for="tag in tags" :key="tag.id" :value="tag.slug">{{ tag.slug }}</option>
+                            </select>
                         </div>
                         <button type="submit" class="btn btn-outline-primary">Poser la question</button>
                     </form>
@@ -54,6 +57,7 @@ export default {
                 title: '',
                 description: ''
             },
+            tags: [],
             questions: [],
             errors: []
         }
@@ -61,6 +65,7 @@ export default {
 
     created() {
         this.getQuestions();
+        this.getTag();
     },
     methods: {
         async getQuestions() {
@@ -74,6 +79,15 @@ export default {
                 .catch((error) => {
                     console.log(error);
                 });
+        },
+        async getTag() {
+            let url = "http://127.0.0.1:8000/api/tags";
+            try {
+                let response = await axios.get(url);
+                this.tags = response.data.tags;
+            } catch (error) {
+                console.log(error);
+            }
         },
         async createQuestion() {
             this.errors = [];

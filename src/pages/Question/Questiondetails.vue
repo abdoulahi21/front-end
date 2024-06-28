@@ -18,13 +18,13 @@
         </div>
         <button type="submit" class="btn btn-outline-primary">Envoyer</button>
       </form>
-      <div v-if="comments.length" class="w-75 mt-3">
+      <div class="w-75 mt-3">
         <h5>Commentaires:</h5>
-        <ul class="list-group">
+        <div class="list-group">
           <li class="list-group-item" v-for="comment in comments" :key="comment.id">
             {{ comment.comment }} - <em>{{ comment.user.name }}</em> <small>({{ comment.time }})</small>
           </li>
-        </ul>
+        </div>
       </div>
     </div>
   </template>
