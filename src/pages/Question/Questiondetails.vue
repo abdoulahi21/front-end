@@ -4,6 +4,33 @@
       <div class="card-body">
         <h5 class="card-title">{{ question.title }}</h5>
         <p class="card-text">{{ question.description }}</p>
+
+    <div class="container">
+      <div class="card w-75 mb-3">
+        <div class="card-body">
+          <h5 class="card-title">{{ question.title }}</h5>
+          <p class="card-text">{{ question.description }}</p>
+        </div>
+      </div>
+      <form @submit.prevent="createComment">
+        <div class="mb-3 w-75">
+          <textarea
+            class="form-control"
+            placeholder="commentaire"
+            v-model="commentaire.comment"
+            id="exampleFormControlTextarea1"
+            rows="3"
+          ></textarea>
+        </div>
+        <button type="submit" class="btn btn-outline-primary">Envoyer</button>
+      </form>
+      <div class="w-75 mt-3">
+        <h5>Commentaires:</h5>
+        <div class="list-group">
+          <li class="list-group-item" v-for="comment in comments" :key="comment.id">
+            {{ comment.comment }} - <em>{{ comment.user.name }}</em> <small>({{ comment.time }})</small>
+          </li>
+        </div>
       </div>
     </div>
     <form @submit.prevent="createComment">
